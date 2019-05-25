@@ -1,0 +1,64 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "repository": "https://github.com/Gikkman/electron-typescript-opinionated-started",
+  "description": "Example app using Electron, Typescript and VSCode",
+  "author": {
+    "name": "Gikkman",
+    "url": "http://www.github.com/gikkman"
+  },
+  "main": "_compile/main.js",
+  "scripts": {
+    "new-migration": "node .migrations/new-migration.js",
+    "prestart": "npm run compile",
+    "start": "electron .",
+    "compile": "tsc",
+    "postcompile": "copyfiles -u 1 electron/**/*.html electron/**/*.css _compile/",
+    "postinstall": "electron-builder install-app-deps",
+    "release-this": "build"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^5.4.0",
+    "electron-log": "^3.0.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^5.4.0",
+    "copyfiles": "^2.1.0",
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2",
+    "typescript": "^3.4.5"
+  },
+  "build": {
+    "asar": false,
+    "productName": "Example",
+    "appId": "random-string-here",
+    "win": {
+      "target": [
+        "portable",
+        "nsis-web",
+        "nsis",
+        "zip"
+      ],
+      "icon": "assets/win.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "assets/win.ico",
+      "installerHeaderIcon": "assets/win.ico",
+      "allowToChangeInstallationDirectory": true
+    },
+    "nsisWeb": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false
+    },
+    "portable": {
+      "unpackDirName": "unpack",
+      "artifactName": "Example.exe"
+    },
+    "directories": {
+      "output": "./_build"
+    }
+  }
+}
