@@ -63,3 +63,4 @@ typings/
 # my own
 _compile/
 _build/
+*.sqlite
