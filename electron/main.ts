@@ -1,20 +1,29 @@
 import {app, BrowserWindow} from 'electron';
 import {join, resolve} from 'path';
 import {format} from 'url';
+import * as log from 'electron-log';
 
 import {attachListeners} from './backend/eventListener';
-import * as db from './backend/repositories/db';
-db.database.exec("SELECT 1");
 attachListeners();
 
-var log: (message: string) => void = console.log;
+var appRoot: string = process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR : resolve('./');
 var window: BrowserWindow;
 
 /************************************************************************
  *  Log
  ************************************************************************/
-log("Starting node " + process.version);
-log("App started. Root path: " + resolve("./"));
+log.transports.file.level = 'info';
+log.transports.file.file = join(appRoot, 'log.log');
+log.transports.console.level = 'silly';
+log.info("Starting node " + process.version);
+log.info("App started. Root path: " + appRoot);
+
+/************************************************************************
+ *  Database startup
+ ************************************************************************/
+import * as db from './backend/repositories/db';
+db.migrate(true);
+db.database.exec("SELECT 1");
 
 /************************************************************************
  *  Main behaviour

@@ -1,15 +1,18 @@
 import * as Database from 'better-sqlite3';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as log from 'electron-log';
 
-export const database = new Database('test.sqlite', {verbose: console.log});
-migrate(true);
+export const database = new Database('test.sqlite', {verbose: log.silly});
 
-/*********************************************************************
- * INTERNAL FUNCTIONS
- ********************************************************************/
-
-function migrate(force: boolean = false, table: string = 'migrations', migrationsPath: string = '.migrations') {
+/** Method for running a database migration. Should preferably be called by the main process,
+ * before the render window is created. 
+ * 
+ * @param force if true, we drop then re-apply the last migration when this method is called
+ * @param table table to store migrations in. Defaults to 'migration'
+ * @param migrationsPath path to where migration files resides, relative to the app root. Defualts to '.migrations'
+ */
+export function migrate(force: boolean = false, table: string = 'migration', migrationsPath: string = '.migrations') {
     const location = path.resolve(migrationsPath);
 
     // Get the list of migration files, for example:
