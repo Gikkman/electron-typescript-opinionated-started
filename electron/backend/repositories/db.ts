@@ -3,7 +3,44 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as log from 'electron-log';
 
-export const database = new Database('test.sqlite', {verbose: log.silly});
+const database = new Database('test.sqlite', {verbose: log.silly});
+process.on('exit', () => database.close());
+
+/** Executes a SELECT and returns all rows that matches a certian SQL, given the parameters.
+ *  
+ * @param sql 
+ * @param params 
+ */
+export function queryAll(sql: string, ...params: any[]) : any[] {
+    let func = sql.split(' ', 2)[0].toUpperCase();
+    if(func === 'SELECT')
+        return database.prepare(sql).all(params);
+    throw new Error("Can only execute SELECT query");
+    }
+
+/** Executes a SELECT and returns the first row that matches a certian SQL, given the parameters.
+ *  
+ * @param sql 
+ * @param params 
+ */
+export function queryFirst(sql: string, ...params: any[]) : any {
+    let func = sql.split(' ', 2)[0].toUpperCase();
+    if(func === 'SELECT')
+        return database.prepare(sql).get(params);
+    throw new Error("Can only execute SELECT query");
+}
+
+/** Executes a INSERT/UPDATE/DELETE or REPLACE, given the sql and parameters.
+ *  
+ * @param sql 
+ * @param params 
+ */
+export function run(sql: string, ... params: any[]) : Database.RunResult {
+    let func = sql.split(' ', 2)[0].toUpperCase();
+    if(func === 'INSERT' || func === 'UPDATE' || func === 'DELETE' || func === 'REPLACE')
+        return database.prepare(sql).run(params);
+    throw new Error("Can only execute INSERT, UPDATE, DELETE or REPLACE query")
+}
 
 /** Method for running a database migration. Should preferably be called by the main process,
  * before the render window is created. 
