@@ -2,14 +2,14 @@
 -- Up
 --------------------------------------------------
 
-CREATE TABLE "gameMetadata" (
-    "fileHash" TEXT PRIMARY KEY NOT NULL,
-    "title" TEXT NOT NULL, 
-    "completed" BOOLEAN NOT NULL DEFAULT 0  -- Default to not completed
+CREATE TABLE "event" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "content" TEXT NOT NULL, 
+    "created" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 --------------------------------------------------
 -- Down
 --------------------------------------------------
 
-DROP TABLE "gameMetadata";
+DROP TABLE "event";

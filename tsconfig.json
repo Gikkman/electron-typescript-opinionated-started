@@ -5,6 +5,13 @@
         "target": "es6",
         "allowJs": true,
         "sourceMap": true,
+        "baseUrl": "electron",
+        "paths": {
+            "*": [
+              "*",
+              "shared/*"
+            ]
+          }
     },
     "include": [
         "./electron/**/*"

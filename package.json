@@ -1,21 +1,21 @@
 {
-  "name": "example",
+  "name": "electron-typescript-opinionated-started",
   "version": "1.0.0",
   "repository": "https://github.com/Gikkman/electron-typescript-opinionated-started",
-  "description": "Example app using Electron, Typescript and VSCode",
+  "description": "Example app using Electron, Typescript, Sqlite and VSCode",
   "author": {
     "name": "Gikkman",
     "url": "http://www.github.com/gikkman"
   },
-  "main": "_compile/main.js",
+  "main": "_compile/Main.js",
   "scripts": {
     "new-migration": "node .migrations/new-migration.js",
     "prestart": "npm run compile",
     "start": "electron .",
-    "compile": "tsc",
+    "compile": "tsfmt -r && tsc",
     "postcompile": "copyfiles -u 1 electron/**/*.html electron/**/*.css _compile/",
     "postinstall": "electron-builder install-app-deps",
-    "release-this": "build"
+    "release-this": "npm run compile && build"
   },
   "keywords": [],
   "license": "MIT",
@@ -28,11 +28,12 @@
     "copyfiles": "^2.1.0",
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "typescript-formatter": "^7.2.2"
   },
   "build": {
-    "asar": false,
-    "productName": "Example",
+    "asar": true,
+    "productName": "ElectronTypescriptOpinionatedStarted",
     "appId": "random-string-here",
     "win": {
       "target": [
@@ -42,6 +43,9 @@
         "zip"
       ],
       "icon": "assets/win.ico"
+    },
+    "mac": {
+      "icon": "assets/mac.icns"
     },
     "nsis": {
       "oneClick": false,
@@ -58,6 +62,7 @@
       "artifactName": "Example.exe"
     },
     "directories": {
+      "buildResources": "assets",
       "output": "./_build"
     }
   }
