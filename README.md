@@ -11,3 +11,12 @@ This started comes with a bundled SQLite database. There is a migrations system 
 * To create a new database migration, run `npm run new-migration migration-name-here`
 * Migrations will occur on startup of the app
 
+## Notes
+
+Bellow is a list of additional tools you might consider adding to your app.
+* Electron Util - A handy collection of "nice to have" features: 
+  * https://github.com/sindresorhus/electron-util
+* Typescript-Formatter - A code formatter for Typescript
+  * https://github.com/vvakame/typescript-formatter
+* Google Typescript Formatter - As above, but google's verions
+  * https://github.com/google/gts

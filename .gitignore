@@ -61,7 +61,6 @@ typings/
 .next
 
 # my own
-!electron/node_modules
 _compile/
 _build/
-*.sqlite
+_data/
