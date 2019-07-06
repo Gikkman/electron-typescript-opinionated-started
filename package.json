@@ -12,7 +12,7 @@
     "new-migration": "node .migrations/new-migration.js",
     "prestart": "npm run compile",
     "start": "electron .",
-    "compile": "tsfmt -r && tsc",
+    "compile": "tsc",
     "postcompile": "copyfiles -u 1 electron/**/*.html electron/**/*.css _compile/",
     "postinstall": "electron-builder install-app-deps",
     "release-this": "npm run compile && build"
@@ -28,8 +28,7 @@
     "copyfiles": "^2.1.0",
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
-    "typescript": "^3.4.5",
-    "typescript-formatter": "^7.2.2"
+    "typescript": "^3.4.5"
   },
   "build": {
     "asar": true,
