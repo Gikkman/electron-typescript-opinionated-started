@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { Event } from 'shared/Event';
+import { Event } from '../shared/Event';
 
 /************************************************************************
  *  Event listeners

@@ -1,5 +1,5 @@
 import { DB } from '../database/EventDatabase';
-import { Event } from 'shared/Event';
+import { Event } from '../../shared/Event';
 import * as logger from 'electron-log';
 
 export function save(content : string) {
