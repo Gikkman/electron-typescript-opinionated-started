@@ -1,28 +1,33 @@
 import { app } from 'electron';
+import * as log from 'electron-log';
 import * as path from 'path';
-import * as log from './Log';
+import * as os from 'os';
 import {isDev} from './IsDev';
 import {existsSync, mkdirSync} from 'fs';
 
-var AppDir = isDev ? path.resolve('./')
-            : process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR 
-            : app.getPath("appData");
+export var appDir = isDev ? path.resolve('./')
+                            : process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR 
+                            : app.getPath("userData");
+export var dataDir =  isDev ? path.join(appDir, '_data') 
+                            : path.join(appDir, 'data');
 
-var DataDir =  isDev ? path.join(AppDir, '_data') 
-                : path.join(AppDir, process.env.npm_package_name,'data');
-
-if (!existsSync(DataDir)) {
-    log.info("Have to create DataDir: " + DataDir)
+if (!existsSync(dataDir)) {
     try {
-        mkdirSync(DataDir, { recursive: true });
-        log.info("Created DataDir: " + DataDir);
+        mkdirSync(dataDir, { recursive: true });
     } catch (err) {
-        log.error("Failed to create DataDir: " + DataDir);
+        let oldLogFile = log.transports.file.file;
+        let oldLogLevel = log.transports.file.level;
+        log.transports.file.file = path.join(os.homedir(), process.env.npm_package_name + "_error.log");
+        log.error("Failed to create DataDir: " + dataDir);
+        log.error(err);
+        log.transports.file.file = oldLogFile;
+        log.transports.file.level = oldLogLevel;
     }
 }
-export function dataFile(file: string) {
-    return path.join(DataDir, file);
-}
 
-log.info("AppDir: " + AppDir);
-log.info("DataDir: " + DataDir);
+export function dataLocation(file: string) {
+    return path.join(dataDir, file);
+}
+export function logLocation(file: string) {
+    return path.join(dataDir, file);
+}

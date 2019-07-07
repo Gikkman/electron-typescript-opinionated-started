@@ -1,5 +1,4 @@
 import * as electron from 'electron';
-import * as log from './Log';
 
 const app = electron.app || electron.remote.app;
 const isEnvSet = 'ELECTRON_IS_DEV' in process.env;
