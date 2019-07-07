@@ -1,5 +1,5 @@
 import { DatabaseBuilder, Database } from './Database';
-import { dataFile } from '../../shared/Location';
+import { dataFile } from '@shared/Location';
 import * as logger from 'electron-log';
 
 export class EventDatabase extends Database {

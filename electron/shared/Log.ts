@@ -20,7 +20,7 @@ var AppDir = isDev ? path.resolve('./')
 var DataDir =  isDev ? path.join(AppDir, '_data') 
     : path.join(AppDir, process.env.npm_package_name,'data');
 
-logger.transports.file.file = path.join(DataDir, '_data');
+logger.transports.file.file = path.join(DataDir, 'application.log');
 
 export function info(params: any) { logger.info(params); }
 export function error(params: any) { logger.error(params); }
