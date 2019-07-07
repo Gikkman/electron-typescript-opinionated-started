@@ -15,7 +15,7 @@
     "compile": "tsc && tscpaths -p tsconfig.json -s ./electron -o ./_compile",
     "postcompile": "copyfiles -u 1 electron/**/*.html electron/**/*.css _compile/",
     "postinstall": "electron-builder install-app-deps",
-    "release-this": "npm run compile && build"
+    "release-this": "npm run compile && build --config electron-builder.json"
   },
   "keywords": [],
   "license": "MIT",
@@ -30,40 +30,5 @@
     "electron-builder": "^20.40.2",
     "tscpaths": "0.0.9",
     "typescript": "^3.4.5"
-  },
-  "build": {
-    "asar": true,
-    "productName": "ElectronTypescriptOpinionatedStarted",
-    "appId": "random-string-here",
-    "win": {
-      "target": [
-        "portable",
-        "nsis-web",
-        "nsis",
-        "zip"
-      ],
-      "icon": "assets/win.ico"
-    },
-    "mac": {
-      "icon": "assets/mac.icns"
-    },
-    "nsis": {
-      "oneClick": false,
-      "installerIcon": "assets/win.ico",
-      "installerHeaderIcon": "assets/win.ico",
-      "allowToChangeInstallationDirectory": true
-    },
-    "nsisWeb": {
-      "oneClick": true,
-      "allowToChangeInstallationDirectory": false
-    },
-    "portable": {
-      "unpackDirName": "unpack",
-      "artifactName": "Example.exe"
-    },
-    "directories": {
-      "buildResources": "assets",
-      "output": "./_build"
-    }
   }
 }

@@ -61,6 +61,7 @@ typings/
 .next
 
 # my own
+.DS_Store
 _compile/
 _build/
 _data/

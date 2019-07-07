@@ -1,19 +1,19 @@
 import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 import { format } from 'url';
-import {attachListeners} from './backend/EventListener';
 
 import { info } from '@shared/Log';
-import { appDir, dataDir } from '@shared/Location';
+import { dataDir, resourcesDir } from '@shared/Location';
 import { isDev} from '@shared/IsDev';
- 
+
 info('IsDev: ' + isDev)
-info('AppDir: ' + appDir);
 info('DataDir: ' + dataDir);
+info('ResourceDir: ' + resourcesDir);
 
 /************************************************************************
  *  Main behaviour
  ************************************************************************/
+import { attachListeners } from './backend/EventListener';
 function createWindow() {
     attachListeners();
     let window = new BrowserWindow({

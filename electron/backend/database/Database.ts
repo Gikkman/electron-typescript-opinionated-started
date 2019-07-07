@@ -1,6 +1,7 @@
 import * as BetterSqlite3 from 'better-sqlite3';
 import * as path from 'path';
 import * as fs from 'fs';
+import {resourceLocation} from '@shared/Location';
 
 /** Interface for describing the results of an update query.
  * 
@@ -87,6 +88,13 @@ export abstract class Database {
         throw new Error("Can only execute INSERT, UPDATE, DELETE or REPLACE query")
     }
 
+    private opIs(sql: string, ...allowed: string[]) {
+        let func = sql.split(' ', 2)[0].toUpperCase();
+        return !!allowed
+            .map(op => op.toUpperCase())
+            .find(op => op === func);
+    }
+
     /** Method for running a database migration. 
      * 
      * @param force if true, we drop then re-apply the last migration when this method is called
@@ -97,7 +105,7 @@ export abstract class Database {
         const force = opts.force || false;
         const table = opts.table || 'migrations'
         const migrationsPath = opts.migrationsPath || '.migrations';
-        const location = path.resolve(migrationsPath);
+        const location = resourceLocation(migrationsPath);
 
         // Get the list of migration files, for example:
         //   { id: 1, name: 'initial', filename: '001-initial.sql' }
