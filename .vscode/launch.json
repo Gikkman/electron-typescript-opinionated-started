@@ -5,7 +5,7 @@
         "name": "Debug Main Process",
         "type": "node",
         "request": "launch",
-        "program": "${workspaceRoot}/electron/main.ts",
+        "program": "${workspaceRoot}/electron/Main.ts",
         "stopOnEntry": false,
         "preLaunchTask": "npm: compile",
         "outFiles": ["${workspaceRoot}/_compile/**/*.js"],

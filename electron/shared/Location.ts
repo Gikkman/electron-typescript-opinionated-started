@@ -1,20 +1,15 @@
 import { app } from 'electron';
-import { resolve, join } from 'path';
-import { mkdirSync, existsSync } from 'fs';
-import * as log from 'electron-log';
+import * as path from 'path';
+import * as log from './Log';
+import {isDev} from './IsDev';
+import {existsSync, mkdirSync} from 'fs';
 
-var AppDir = process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR : app.getPath("appData");
-var HomeDir = app.getPath("home");
-var DataDir = join(AppDir, '.electron-example/data');
-var CodeDir = resolve(__dirname, '../');
+var AppDir = isDev ? path.resolve('./')
+            : process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR 
+            : app.getPath("appData");
 
-export function DataFile(file : string) {
-    return join(DataDir, file);
-}
-
-export function CodeFile(file : string) {
-    return resolve(CodeDir, file);
-}
+var DataDir =  isDev ? path.join(AppDir, '_data') 
+                : path.join(AppDir, process.env.npm_package_name,'data');
 
 if (!existsSync(DataDir)) {
     log.info("Have to create DataDir: " + DataDir)
@@ -25,9 +20,9 @@ if (!existsSync(DataDir)) {
         log.error("Failed to create DataDir: " + DataDir);
     }
 }
+export function dataFile(file: string) {
+    return path.join(DataDir, file);
+}
 
-log.info("Exposing directory locations")
-log.info("App dir: " + AppDir);
-log.info("Home dir: " + HomeDir);
-log.info("Code dir: " + CodeDir);
-log.info("Data dir: " + DataDir);
+log.info("AppDir: " + AppDir);
+log.info("DataDir: " + DataDir);
