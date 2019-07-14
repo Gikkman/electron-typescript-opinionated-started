@@ -1,6 +1,6 @@
 {    
     "asar": true,
-    "productName": "ElectronTypescriptOpinionatedStarted",
+    "productName": "ElectronTypescriptOpinionatedStarter",
     "appId": "random-string-here",
     "extraResources": [
         "./.migrations/*",
