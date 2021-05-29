@@ -1,7 +1,7 @@
 import * as BetterSqlite3 from 'better-sqlite3';
 import * as path from 'path';
 import * as fs from 'fs';
-import {resourceLocation} from '@shared/Location';
+import { resourceLocation } from '@shared/Location';
 
 /** Interface for describing the results of an update query.
  * 
@@ -113,6 +113,7 @@ export abstract class Database {
         const migrations = fs.readdirSync(location)
             .map(x => x.match(/^(\d+).(.*?)\.sql$/))
             .filter(x => x !== null)
+            // @ts-ignore: Object is possibly 'null'
             .map(x => ({ id: Number(x[1]), name: x[2], filename: x[0], up: '', down: '' }))
             .sort((a, b) => Math.sign(a.id - b.id));
 
@@ -239,7 +240,7 @@ export class DatabaseBuilder {
     }
 
     getDatabaseOptions() {
-        let opts = {};
+        let opts: Record<string, any> = {};
         if (this.inMemory) opts["memory"] = this.inMemory;
         if (this.readOnly) opts["readonly"] = this.readOnly;
         if (this.fileMustExist) opts["fileMustExist"] = this.fileMustExist;

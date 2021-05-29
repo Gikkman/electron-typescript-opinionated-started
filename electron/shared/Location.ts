@@ -1,16 +1,17 @@
-import { app } from 'electron';
+import { app, remote } from 'electron';
 import * as log from 'electron-log';
 import * as path from 'path';
 import * as os from 'os';
-import {isDev} from './IsDev';
-import {existsSync, mkdirSync} from 'fs';
 
-var userDataDir = isDev ? path.resolve('./')
+import {existsSync, mkdirSync} from 'fs';
+import { IsDev } from './IsDev';
+
+var userDataDir = IsDev ? path.resolve('./')
                     : process.env.PORTABLE_EXECUTABLE_DIR ? process.env.PORTABLE_EXECUTABLE_DIR 
-                        : app.getPath("userData");
-export var dataDir =  isDev ? path.join(userDataDir, '_data') 
+                        : app?.getPath("userData") ?? remote?.app?.getPath("userData");
+export var dataDir =  IsDev ? path.join(userDataDir, '_data') 
                         : path.join(userDataDir, 'data');
-export var resourcesDir = isDev ? path.resolve("./")
+export var resourcesDir = IsDev ? path.resolve("./")
                             : path.resolve(process.resourcesPath);
 
 if (!existsSync(dataDir)) {
@@ -19,7 +20,7 @@ if (!existsSync(dataDir)) {
     } catch (err) {
         let oldLogFile = log.transports.file.file;
         let oldLogLevel = log.transports.file.level;
-        let newLogLocation = isDev ? path.resolve('./') : os.homedir();
+        let newLogLocation = IsDev ? path.resolve('./') : os.homedir();
         log.transports.file.file = path.join(newLogLocation, process.env.npm_package_name + "_error.log");
         log.error("Failed to create DataDir: " + dataDir);
         log.error(err);

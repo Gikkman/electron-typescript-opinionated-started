@@ -4,22 +4,24 @@ import { format } from 'url';
 
 import { info } from '@shared/Log';
 import { dataDir, resourcesDir } from '@shared/Location';
-import { isDev} from '@shared/IsDev';
+import { IsDev } from '@shared/IsDev';
+import { attachListeners } from './backend/EventListener';
 
-info('IsDev: ' + isDev)
+info('IsDev: ' + IsDev)
 info('DataDir: ' + dataDir);
 info('ResourceDir: ' + resourcesDir);
 
 /************************************************************************
  *  Main behaviour
  ************************************************************************/
-import { attachListeners } from './backend/EventListener';
 function createWindow() {
     attachListeners();
     let window = new BrowserWindow({
         width: 800, height: 600,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
         }
     });
     window.loadURL(format({

@@ -15,6 +15,9 @@
         "windows": {
           "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
         },
+        "env": {
+          "APP_DEBUG": "true",
+        },
         "args" : [],
         "console": "internalConsole",
         "outputCapture": "std",

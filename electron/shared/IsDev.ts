@@ -1,7 +1,7 @@
 import * as electron from 'electron';
 
-const app = electron.app || electron.remote.app;
+const app = electron?.app || electron?.remote?.app || {isPackaged: false};
 const isEnvSet = 'ELECTRON_IS_DEV' in process.env;
-const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
+const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV ?? "0", 10) === 1;
 
-export var isDev = isEnvSet ? getFromEnv : !app.isPackaged;
+export const IsDev = isEnvSet ? getFromEnv : !app.isPackaged;

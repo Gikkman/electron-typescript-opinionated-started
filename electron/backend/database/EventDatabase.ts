@@ -1,14 +1,20 @@
 import { DatabaseBuilder, Database } from './Database';
 import { dataLocation } from '@shared/Location';
-import { isDev } from '@shared/IsDev'
-import * as logger from 'electron-log';
+import { IsDev } from '@shared/IsDev';
+import { info } from '@shared/Log';
 
 export class EventDatabase extends Database {
     constructor() {
-        let builder = new DatabaseBuilder(dataLocation("event.sqlite")).setVerboseLogger(logger.info);
+        let builder = new DatabaseBuilder(dataLocation("event.sqlite")).setVerboseLogger(info);
         super(builder);
-        this.migrate({ force: isDev });
+        this.migrate({ force: IsDev });
     }
 };
 
-export var DB = new EventDatabase();
+let database: EventDatabase;
+
+export function DB(){
+    if(database) return database;
+    database = new EventDatabase();
+    return database;
+}
