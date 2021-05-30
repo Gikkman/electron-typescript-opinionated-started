@@ -1,0 +1,12 @@
+{
+    "reporters": [
+      {
+        "name": "jasmine-spec-reporter#SpecReporter",
+        "options": {
+          "displayStacktrace": "all"
+        }
+      }
+    ],
+    "spec_dir": "electron/test",
+    "spec_files": ["**/*[tT]est.ts"]
+}

@@ -15,7 +15,8 @@
     "compile": "tsc && tscpaths -p tsconfig.json -s ./electron -o ./_compile",
     "postcompile": "copyfiles -u 1 electron/**/*.html electron/**/*.css _compile/",
     "postinstall": "electron-builder install-app-deps",
-    "release-this": "npm run compile && build --config electron-builder.json"
+    "release-this": "npm run compile && build --config electron-builder.json",
+    "test": "jasmine-ts --project=tsconfig.json --config=jasmine.json"
   },
   "keywords": [],
   "license": "MIT",
@@ -25,9 +26,15 @@
   },
   "devDependencies": {
     "@types/better-sqlite3": "^5.4.1",
+    "@types/jasmine": "^3.7.6",
     "copyfiles": "^2.4.0",
-    "electron": "^13.0.0",
+    "electron": "^12.0.0",
     "electron-builder": "^22.10.2",
+    "jasmine": "^3.7.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "jasmine-ts": "^0.3.3",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.9.0",
     "tscpaths": "0.0.9",
     "typescript": "^4.3.0"
   }
